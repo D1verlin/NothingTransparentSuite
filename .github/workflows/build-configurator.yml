@@ -1,0 +1,62 @@
+name: Build & Package Suite
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    tags: [ "v*", "1.0*" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Build NothingConfig App
+      working-directory: src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/App
+      run: |
+        dotnet restore
+        dotnet build -c Release --no-restore
+        dotnet publish -c Release -o ../output
+
+    - name: Deploy Compiled Executable into @Resources
+      shell: pwsh
+      run: |
+        Copy-Item -Path "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/output/*" -Destination "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config" -Force
+
+    - name: Assemble .rmskin Package
+      shell: pwsh
+      run: |
+        $staging = New-Item -ItemType Directory -Path "$env:RUNNER_TEMP/rmskin_staging"
+        $skinDest = New-Item -ItemType Directory -Path "$staging/Skins/NothingTransparentSuite"
+        Copy-Item -Path "src/Rainmeter/Skins/NothingTransparentSuite/*" -Destination $skinDest -Recurse -Force
+        
+        $rmskinIni = @"
+        [rmskin]
+        Name=NothingTransparentSuite
+        Author=D1verlin
+        Version=1.0.0
+        Load=NothingTransparentSuite\Clock\Clock.ini
+        MinimumRainmeter=4.5.0
+        MinimumWindows=10.0
+        "@
+        [System.IO.File]::WriteAllText("$staging/RMSKIN.ini", $rmskinIni.Trim())
+        
+        New-Item -ItemType Directory -Path "release" -Force
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        [System.IO.Compression.ZipFile]::CreateFromDirectory($staging, "release/NothingTransparentSuite-v1.0.0.rmskin")
+
+    - name: Upload .rmskin Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: NothingTransparentSuite-v1.0.0
+        path: release/*.rmskin

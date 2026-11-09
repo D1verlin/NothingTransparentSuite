@@ -1,0 +1,485 @@
+<Window x:Class="NothingTransparentSuite.Config.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NOTHING SUITE · CONFIG"
+        Icon="icon.ico"
+        Width="780" Height="730"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- Outer Border with Rounded Corners -->
+    <Border Background="{StaticResource BrushBg}"
+            BorderBrush="{StaticResource BrushBorder}"
+            BorderThickness="1"
+            CornerRadius="20"
+            ClipToBounds="True">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="64" />  <!-- Header / Titlebar -->
+                <RowDefinition Height="50" />  <!-- Tabs Navigation -->
+                <RowDefinition Height="*" />   <!-- Tab Content -->
+                <RowDefinition Height="74" />  <!-- Action Footer -->
+            </Grid.RowDefinitions>
+
+            <!-- ===================================================================
+                 HEADER BAR (DRAGGABLE)
+                 =================================================================== -->
+            <Border Grid.Row="0" Background="#0F0F0F" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1" MouseLeftButtonDown="Header_MouseDown">
+                <Grid Margin="22,0,18,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- Nothing Official Teardrop Dot-Matrix Icon -->
+                        <Image Source="icon.png" Width="26" Height="26" VerticalAlignment="Center" Margin="0,0,12,0" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="NOTHING TRANSPARENT SUITE"
+                                       FontFamily="{StaticResource FontNDot57}"
+                                       FontSize="15"
+                                       Foreground="{StaticResource BrushTextPrimary}" />
+                            <TextBlock Text="SYSTEM SETTINGS &amp; WIDGET CONFIGURATOR"
+                                       FontFamily="{StaticResource FontNDot55}"
+                                       FontSize="9"
+                                       Foreground="{StaticResource BrushTextSecondary}"
+                                       Margin="0,2,0,0" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Window Control Buttons -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="BtnMinimize" Content="-" Click="BtnMinimize_Click"
+                                Width="34" Height="34" Margin="0,0,6,0"
+                                Background="#1A1A1A" Foreground="#AAAAAA"
+                                FontFamily="{StaticResource FontInterSemiBold}" FontSize="16"
+                                Cursor="Hand" BorderThickness="0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="b" Property="Background" Value="#2A2A2A" />
+                                            <Setter Property="Foreground" Value="#FFFFFF" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button x:Name="BtnClose" Content="✕" Click="BtnClose_Click"
+                                Width="34" Height="34"
+                                Background="#1A1A1A" Foreground="#AAAAAA"
+                                FontFamily="{StaticResource FontInterSemiBold}" FontSize="14"
+                                Cursor="Hand" BorderThickness="0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="b" Property="Background" Value="#D71920" />
+                                            <Setter Property="Foreground" Value="#FFFFFF" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ===================================================================
+                 NAVIGATION TABS (NOTHING PILL SEGMENTS)
+                 =================================================================== -->
+            <Border Grid.Row="1" Background="#0C0C0C" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="22,0,22,0">
+                    <RadioButton x:Name="TabWidgetsBtn" Content="WIDGETS" IsChecked="True" Click="NavTab_Click" GroupName="NavTabs"
+                                 Style="{StaticResource NothingTabRadio}" />
+                    <RadioButton x:Name="TabDesignBtn" Content="DESIGN &amp; GLASS" Click="NavTab_Click" GroupName="NavTabs"
+                                 Style="{StaticResource NothingTabRadio}" Margin="10,0,0,0" />
+                    <RadioButton x:Name="TabModulesBtn" Content="MODULES" Click="NavTab_Click" GroupName="NavTabs"
+                                 Style="{StaticResource NothingTabRadio}" Margin="10,0,0,0" />
+                    <RadioButton x:Name="TabShortcutsBtn" Content="SHORTCUTS" Click="NavTab_Click" GroupName="NavTabs"
+                                 Style="{StaticResource NothingTabRadio}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- ===================================================================
+                 MAIN TAB CONTENT AREA
+                 =================================================================== -->
+            <Grid Grid.Row="2" Margin="22,18,22,10">
+
+                <!-- TAB 1: WIDGETS BENTO GRID -->
+                <ScrollViewer x:Name="TabWidgets" VerticalScrollBarVisibility="Auto" Visibility="Visible">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="14" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Clock Card -->
+                        <Border Grid.Row="0" Grid.Column="0" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ 12:00 ]  TIME &amp; DATE" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Матричные часы NDot, секунды, дата и аптайм" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkClock" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- System Card -->
+                        <Border Grid.Row="0" Grid.Column="2" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ CPU ]  SYSTEM MONITOR" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Загрузка процессора CPU, памяти RAM и GPU" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkSystem" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Disks Card -->
+                        <Border Grid.Row="1" Grid.Column="0" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ DISK ]  STORAGE &amp; IO" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Накопители C: и D:, скорость чтения/записи" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkDisks" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Todo Card -->
+                        <Border Grid.Row="1" Grid.Column="2" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ TASK ]  TASK LIST" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Интерактивный Todo-список задач на Lua" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkTodo" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Network Card -->
+                        <Border Grid.Row="2" Grid.Column="0" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ NET ]  NETWORK TRAFFIC" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Скорость сети DL/UL, линейный график и IP" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkNetwork" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Player Card -->
+                        <Border Grid.Row="2" Grid.Column="2" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ PLAY ]  MEDIA PLAYER" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Web-плеер (YouTube/Spotify) с кнопками" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkPlayer" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Weather Card -->
+                        <Border Grid.Row="3" Grid.Column="0" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ WEATH ]  WEATHER" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Температура и условия Open-Meteo" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkWeather" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Launcher Card -->
+                        <Border Grid.Row="3" Grid.Column="2" Margin="0,0,0,12" Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="16,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="[ DOCK ]  QUICK LAUNCH" FontFamily="{StaticResource FontNDot57}" FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Док быстрого запуска приложений" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkLauncher" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+
+                <!-- TAB 2: DESIGN & GLASS -->
+                <ScrollViewer x:Name="TabDesign" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                    <StackPanel>
+                        <!-- Blur Toggle Card -->
+                        <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16" Margin="0,0,0,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center" Margin="0,0,20,0">
+                                    <TextBlock Text="WINDOWS ACRYLIC BLUR (FROSTEDGLASS)" FontFamily="{StaticResource FontNDot57}" FontSize="13" Foreground="{StaticResource BrushTextPrimary}" />
+                                    <TextBlock Text="Акриловое размытие обоев Windows позади карточек. Отключите его для получения чистых идеально скругленных углов без системного прямоугольного ореола."
+                                               FontFamily="{StaticResource FontInter}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" TextWrapping="Wrap" Margin="0,6,0,0" />
+                                </StackPanel>
+                                <CheckBox x:Name="ChkEnableBlur" Grid.Column="1" Style="{StaticResource NothingToggleSwitch}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Corner Radius & Glass Opacity Card -->
+                        <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16" Margin="0,0,0,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Radius -->
+                                <StackPanel Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="СКРУГЛЕНИЕ УГЛОВ:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" />
+                                        <TextBlock x:Name="LblRadiusVal" Text="14 px" FontFamily="{StaticResource FontInterSemiBold}" FontSize="12" Foreground="{StaticResource BrushTextPrimary}" Margin="8,0,0,0" />
+                                    </StackPanel>
+                                    <Slider x:Name="TrkCornerRadius" Minimum="0" Maximum="24" Value="14" TickFrequency="2" IsSnapToTickEnabled="True"
+                                            ValueChanged="TrkCornerRadius_ValueChanged" Style="{StaticResource NothingSlider}" Margin="0,10,0,0" />
+                                </StackPanel>
+
+                                <!-- Opacity -->
+                                <StackPanel Grid.Column="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="ЗАТЕМНЕНИЕ СТЕКЛА:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" />
+                                        <TextBlock x:Name="LblAlphaVal" Text="120" FontFamily="{StaticResource FontInterSemiBold}" FontSize="12" Foreground="{StaticResource BrushTextPrimary}" Margin="8,0,0,0" />
+                                    </StackPanel>
+                                    <Slider x:Name="TrkGlassAlpha" Minimum="20" Maximum="230" Value="120" TickFrequency="10" IsSnapToTickEnabled="True"
+                                            ValueChanged="TrkGlassAlpha_ValueChanged" Style="{StaticResource NothingSlider}" Margin="0,10,0,0" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Live Visual Preview Box -->
+                        <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16">
+                            <StackPanel>
+                                <TextBlock Text="LIVE VISUAL CARD PREVIEW" FontFamily="{StaticResource FontNDot57}" FontSize="12" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,12" />
+                                <Border x:Name="PnlLivePreview"
+                                        Width="320" Height="110"
+                                        Background="#141414"
+                                        BorderBrush="{StaticResource BrushBorder}"
+                                        BorderThickness="1"
+                                        CornerRadius="14"
+                                        Padding="16"
+                                        HorizontalAlignment="Center">
+                                    <Grid>
+                                        <StackPanel VerticalAlignment="Top">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="PREVIEW CARD" FontFamily="{StaticResource FontNDot57}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" />
+                                                <Ellipse Width="6" Height="6" Fill="{StaticResource BrushAccent}" Margin="8,0,0,0" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <TextBlock Text="NOTHING OS" FontFamily="{StaticResource FontNDot57}" FontSize="24" Foreground="{StaticResource BrushTextPrimary}" Margin="0,6,0,0" />
+                                            <TextBlock Text="REAL-TIME DIRECT2D RENDERING" FontFamily="{StaticResource FontInter}" FontSize="9.5" Foreground="{StaticResource BrushTextSecondary}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- TAB 3: MODULES (WEATHER, DISKS, PLAYER) -->
+                <ScrollViewer x:Name="TabModules" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                    <StackPanel>
+                        <!-- Weather Card with Smart Location -->
+                        <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16" Margin="0,0,0,14">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="ПОГОДА И МЕСТОПОЛОЖЕНИЕ" FontFamily="{StaticResource FontNDot57}" FontSize="13" Foreground="{StaticResource BrushTextPrimary}" />
+                                        <TextBlock Text="Автоматическое определение координат по IP или умный поиск по названию города." FontFamily="{StaticResource FontInter}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,3,0,0" />
+                                    </StackPanel>
+                                    <!-- Smart Auto-Detect Button -->
+                                    <Button x:Name="BtnAutoDetect" Grid.Column="1" Click="BtnAutoDetect_Click"
+                                            Content="📍 ОПРЕДЕЛИТЬ АВТОМАТИЧЕСКИ"
+                                            Style="{StaticResource NothingSecondaryButton}"
+                                            Background="#222222" Foreground="#FFFFFF"
+                                            BorderBrush="{StaticResource BrushAccent}"
+                                            Padding="14,8" />
+                                </Grid>
+
+                                <!-- City Input & Search -->
+                                <Grid Margin="0,14,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2.2*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="14" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="ГОРОД:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="10" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6" />
+                                        <TextBox x:Name="TxtCity" Text="MOSCOW" KeyDown="TxtCity_KeyDown" Style="{StaticResource NothingTextBox}" />
+                                    </StackPanel>
+
+                                    <Button x:Name="BtnSearchCity" Grid.Column="2" Content="НАЙТИ" Click="BtnSearchCity_Click"
+                                            Style="{StaticResource NothingSecondaryButton}" VerticalAlignment="Bottom" Height="34" Padding="12,0" />
+
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="ШИРОТА:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="10" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6" />
+                                        <TextBox x:Name="TxtLat" Text="55.7558" Style="{StaticResource NothingTextBox}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="6">
+                                        <TextBlock Text="ДОЛГОТА:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="10" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6" />
+                                        <TextBox x:Name="TxtLon" Text="37.6173" Style="{StaticResource NothingTextBox}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Geolocation Status Feedback -->
+                                <TextBlock x:Name="TxtGeoStatus" Text="" FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushAccent}" Margin="0,8,0,0" />
+
+                                <!-- Quick Presets -->
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="ПРЕСЕТЫ:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="10" Foreground="{StaticResource BrushTextSecondary}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                                    <Button Content="МОСКВА" Click="PresetCity_Click" Tag="MOSCOW|55.7558|37.6173" Style="{StaticResource NothingSecondaryButton}" Margin="0,0,6,0" />
+                                    <Button Content="С.-ПЕТЕРБУРГ" Click="PresetCity_Click" Tag="ST. PETERSBURG|59.9343|30.3351" Style="{StaticResource NothingSecondaryButton}" Margin="0,0,6,0" />
+                                    <Button Content="БРЕСТ" Click="PresetCity_Click" Tag="BREST|52.0901|23.6836" Style="{StaticResource NothingSecondaryButton}" Margin="0,0,6,0" />
+                                    <Button Content="МИНСК" Click="PresetCity_Click" Tag="MINSK|53.9006|27.5590" Style="{StaticResource NothingSecondaryButton}" Margin="0,0,6,0" />
+                                    <Button Content="АЛМАТЫ" Click="PresetCity_Click" Tag="ALMATY|43.2389|76.8897" Style="{StaticResource NothingSecondaryButton}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Disks Card -->
+                        <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="НАКОПИТЕЛИ И ПАМЯТЬ" FontFamily="{StaticResource FontNDot57}" FontSize="13" Foreground="{StaticResource BrushTextPrimary}" />
+                                <TextBlock Text="Укажите буквы отслеживаемых логических дисков в вашей системе." FontFamily="{StaticResource FontInter}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,14" />
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="14" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="ОСНОВНОЙ ДИСК 1:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="10" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6" />
+                                        <TextBox x:Name="TxtDisk1" Text="C:" Style="{StaticResource NothingTextBox}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="ДОПОЛНИТЕЛЬНЫЙ ДИСК 2:" FontFamily="{StaticResource FontInterSemiBold}" FontSize="10" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6" />
+                                        <TextBox x:Name="TxtDisk2" Text="D:" Style="{StaticResource NothingTextBox}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Player Mode Card -->
+                        <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16">
+                            <StackPanel>
+                                <TextBlock Text="МЕДИАПЛЕЕР" FontFamily="{StaticResource FontNDot57}" FontSize="13" Foreground="{StaticResource BrushTextPrimary}" />
+                                <TextBlock Text="Выберите поставщика данных для воспроизведения музыки." FontFamily="{StaticResource FontInter}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,12" />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton x:Name="RadPlayerWeb" Content="WEB / SPOTIFY (WebNowPlaying)" IsChecked="True" GroupName="PlayerSource" Style="{StaticResource NothingTabRadio}" />
+                                    <RadioButton x:Name="RadPlayerLocal" Content="LOCAL (WMP, AIMP, foobar2000)" GroupName="PlayerSource" Style="{StaticResource NothingTabRadio}" Margin="12,0,0,0" />
+                                </StackPanel>
+
+                                <TextBlock Text="💡 Для браузеров (Chrome, Edge, Яндекс Браузер, Firefox) установите расширение WebNowPlaying Companion в магазине расширений."
+                                           FontFamily="{StaticResource FontInter}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,10,0,0" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- TAB 4: SHORTCUTS (LAUNCHER) -->
+                <ScrollViewer x:Name="TabShortcuts" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                    <Border Background="{StaticResource BrushCard}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Padding="20,16">
+                        <StackPanel>
+                            <TextBlock Text="ЯРЛЫКИ БЫСТРОГО ЗАПУСКА (QUICK LAUNCH)" FontFamily="{StaticResource FontNDot57}" FontSize="13" Foreground="{StaticResource BrushTextPrimary}" />
+                            <TextBlock Text="Настройте до 6 приложений для быстрого запуска по клику из док-панели." FontFamily="{StaticResource FontInter}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,4,0,14" />
+
+                            <Grid x:Name="PnlShortcutsRows" />
+                        </StackPanel>
+                    </Border>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- ===================================================================
+                 BOTTOM ACTION FOOTER
+                 =================================================================== -->
+            <Border Grid.Row="3" Background="#0F0F0F" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,1,0,0">
+                <Grid Margin="22,0,22,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtStatus" Text="✓ ВСЕ НАСТРОЙКИ СИНХРОНИЗИРОВАНЫ"
+                                   FontFamily="{StaticResource FontInterSemiBold}"
+                                   FontSize="11"
+                                   Foreground="{StaticResource BrushTextSecondary}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <Button x:Name="BtnApply" Grid.Column="1" Content="ПРИМЕНИТЬ И ПЕРЕЗАГРУЗИТЬ"
+                            Click="BtnApply_Click"
+                            Style="{StaticResource NothingActionButton}" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

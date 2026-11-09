@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NothingConfig</AssemblyName>
+    <RootNamespace>NothingTransparentSuite.Config</RootNamespace>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <CodePage>65001</CodePage>
+    <Authors>D1verlin</Authors>
+    <Company>D1verlin</Company>
+    <Product>Nothing Transparent Suite</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.otf" />
+    <Resource Include="Fonts\*.ttf" />
+    <Resource Include="icon.ico" />
+    <Resource Include="icon.png" />
+  </ItemGroup>
+</Project>
