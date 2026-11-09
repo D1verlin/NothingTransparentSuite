@@ -21,17 +21,18 @@ jobs:
       with:
         dotnet-version: '9.0.x'
 
-    - name: Build NothingConfig App
+    - name: Build NothingConfig App (Single File Executable)
       working-directory: src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/App
       run: |
         dotnet restore
-        dotnet build -c Release --no-restore
-        dotnet publish -c Release -o ../output
+        dotnet publish -c Release -r win-x64 --no-self-contained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ../output
 
-    - name: Deploy Compiled Executable into @Resources
+    - name: Deploy Compiled Executable into @Resources & Release
       shell: pwsh
       run: |
-        Copy-Item -Path "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/output/*" -Destination "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config" -Force
+        New-Item -ItemType Directory -Path "release" -Force
+        Copy-Item -Path "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/output/NothingConfig.exe" -Destination "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/NothingConfig.exe" -Force
+        Copy-Item -Path "src/Rainmeter/Skins/NothingTransparentSuite/@Resources/Config/output/NothingConfig.exe" -Destination "release/NothingConfig.exe" -Force
 
     - name: Assemble .rmskin Package
       shell: pwsh
@@ -63,11 +64,13 @@ jobs:
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         [System.IO.Compression.ZipFile]::CreateFromDirectory($staging, $rmskinFile)
 
-    - name: Upload .rmskin Artifact
+    - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: NothingTransparentSuite-v1.0.0
-        path: release/*.rmskin
+        path: |
+          release/NothingTransparentSuite-v1.0.0.rmskin
+          release/NothingConfig.exe
 
     - name: Create or Update GitHub Release
       if: github.ref == 'refs/heads/main'
@@ -79,19 +82,18 @@ jobs:
           ### Nothing Transparent Suite v1.0.0
           Official unified Rainmeter desktop suite crafted in the authentic Nothing OS aesthetic.
 
+          #### Downloads:
+          - **`NothingTransparentSuite-v1.0.0.rmskin`**: Full Rainmeter suite (all 8 widgets, plugins, fonts, and configurator in one 1-click installer).
+          - **`NothingConfig.exe`**: Standalone single-file configurator application.
+
           #### Highlights:
           - **8 Modular Direct2D Widgets**: Clock, System, Disks, Todo, Network, Player, Weather, Launcher.
-          - **NothingConfig v2**: Native .NET 9 WPF configurator with Bento Grid layout and smart geolocation.
-          - **Official Dot-Matrix Teardrop Icon**: Scalable SVG and multi-size Windows icon (.ico).
+          - **NothingConfig**: Native .NET 9 WPF configurator with Bento Grid layout and 1-click smart geolocation.
+          - **Official Dot-Matrix Teardrop Icon**: Scalable vector aesthetic.
           - **Frosted Glass**: Windows Acrylic blur support and clean glass mode.
-
-          #### Quick Install:
-          1. Download `NothingTransparentSuite-v1.0.0.rmskin` attached below.
-          2. Double-click to install into Rainmeter.
         files: |
-          release/*.rmskin
-          icon.svg
-          icon.png
+          release/NothingTransparentSuite-v1.0.0.rmskin
+          release/NothingConfig.exe
         draft: false
         prerelease: false
       env:
