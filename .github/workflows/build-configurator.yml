@@ -45,16 +45,16 @@ jobs:
         Remove-Item "$skinDest/@Resources/Config/App/bin" -Recurse -Force -ErrorAction SilentlyContinue
         Remove-Item "$skinDest/@Resources/Config/App/obj" -Recurse -Force -ErrorAction SilentlyContinue
         
-        $rmskinIni = @"
-[rmskin]
-Name=NothingTransparentSuite
-Author=D1verlin
-Version=1.0.0
-Load=NothingTransparentSuite\Clock\Clock.ini
-MinimumRainmeter=4.5.0
-MinimumWindows=10.0
-"@
-        [System.IO.File]::WriteAllText("$staging/RMSKIN.ini", $rmskinIni.Trim())
+        $rmskinLines = @(
+          "[rmskin]",
+          "Name=NothingTransparentSuite",
+          "Author=D1verlin",
+          "Version=1.0.0",
+          "Load=NothingTransparentSuite\Clock\Clock.ini",
+          "MinimumRainmeter=4.5.0",
+          "MinimumWindows=10.0"
+        )
+        $rmskinLines | Out-File -FilePath "$staging/RMSKIN.ini" -Encoding ascii
         
         New-Item -ItemType Directory -Path "release" -Force
         $rmskinFile = "release/NothingTransparentSuite-v1.0.0.rmskin"
