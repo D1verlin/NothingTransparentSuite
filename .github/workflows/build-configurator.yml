@@ -3,9 +3,10 @@ name: Build & Package Suite
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -67,3 +68,31 @@ jobs:
       with:
         name: NothingTransparentSuite-v1.0.0
         path: release/*.rmskin
+
+    - name: Create or Update GitHub Release
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.0.0
+        name: "Nothing Transparent Suite v1.0.0"
+        body: |
+          ### Nothing Transparent Suite v1.0.0
+          Official unified Rainmeter desktop suite crafted in the authentic Nothing OS aesthetic.
+
+          #### Highlights:
+          - **8 Modular Direct2D Widgets**: Clock, System, Disks, Todo, Network, Player, Weather, Launcher.
+          - **NothingConfig v2**: Native .NET 9 WPF configurator with Bento Grid layout and smart geolocation.
+          - **Official Dot-Matrix Teardrop Icon**: Scalable SVG and multi-size Windows icon (.ico).
+          - **Frosted Glass**: Windows Acrylic blur support and clean glass mode.
+
+          #### Quick Install:
+          1. Download `NothingTransparentSuite-v1.0.0.rmskin` attached below.
+          2. Double-click to install into Rainmeter.
+        files: |
+          release/*.rmskin
+          icon.svg
+          icon.png
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
