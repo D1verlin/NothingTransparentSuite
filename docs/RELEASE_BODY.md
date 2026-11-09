@@ -1,79 +1,90 @@
-# ✦ Nothing Transparent Suite v1.0.0
+# Nothing Transparent Suite v1.0.0
 
-Комплекс прозрачных монохромных виджетов для Rainmeter в аутентичной эстетике Nothing OS со встроенным конфигуратором NothingConfig.
-
----
-
-## 📦 Что скачивать и в чем разница
-
-| Файл | Для кого и зачем |
-| :--- | :--- |
-| **`NothingTransparentSuite-v1.0.0.rmskin`** *(Рекомендуется)* | **Полный комплект сюиты в 1 клик.** Устанавливает все 8 виджетов, встроенные шрифты (NDot 55, NDot 57, Inter), плагины (FrostedGlass, WebNowPlaying) и приложение-конфигуратор. Ничего вручную копировать не нужно. |
-| **`NothingConfig.exe`** | **Автономное приложение для настройки.** Одиночный портативный `.exe` файл (~1.3 МБ). Нужен, если вы хотите иметь быстрый ярлык для настройки параметров виджетов или обновляете только программу конфигурации без переустановки скинов. |
+A unified transparent monochrome Rainmeter desktop suite crafted in the authentic Nothing OS aesthetic.
 
 ---
 
-## 🚀 Пошаговое руководство: что куда класть и как настроить
+## Available Assets
 
-### Шаг 1. Автоматическая установка (1 клик)
-1. Убедитесь, что у вас установлен **[Rainmeter 4.5+ или 5.0+](https://www.rainmeter.net/)** (64-bit).
-2. Скачайте файл **`NothingTransparentSuite-v1.0.0.rmskin`** из блока Assets ниже.
-3. Запустите скачанный файл двойным кликом мыши.
-4. В открывшемся окне *Rainmeter Skin Installer* оставьте галочку **Apply included layout** (или Load included skins) и нажмите **Install**.
-   > *Rainmeter сам автоматически распакует всё в правильную системную папку: `%USERPROFILE%\Documents\Rainmeter\Skins\NothingTransparentSuite`.*
+| File | Purpose | Recommended For |
+| :--- | :--- | :--- |
+| `NothingTransparentSuite-v1.0.0.rmskin` | Complete package installer. Automatically installs all 8 widgets, required fonts, runtime plugins, and the NothingConfig utility. | All users (standard 1-click installation). |
+| `NothingConfig.exe` | Standalone portable configuration utility (single-file executable, ~1.3 MB). | Users managing suite variables without reinstalling skins. |
 
-### Шаг 1 (альтернативный). Если устанавливаете вручную из исходников
-Если вы скачали исходный архив `.zip` с кодом:
-1. Распакуйте папку `NothingTransparentSuite` в:
+---
+
+## Prerequisites
+
+1. **Rainmeter 4.5 or 5.0 (64-bit)**
+   - Download and install from [rainmeter.net](https://www.rainmeter.net/).
+2. **.NET 9.0 Desktop Runtime** (for running the NothingConfig utility)
+   - Download from [microsoft.com/net](https://dotnet.microsoft.com/download/dotnet/9.0).
+3. **WebNowPlaying Companion Browser Extension** (for YouTube, Spotify Web, and browser media tracking)
+   - Chrome / Edge / Brave: [Chrome Web Store](https://chromewebstore.google.com/detail/webnowplaying-companion/jfakgfcdgpghbbefmfljkbdlibifomfo)
+   - Firefox: [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/webnowplaying-companion/)
+
+---
+
+## Installation
+
+### Method A: Automated Installation (.rmskin) — Recommended
+
+1. Download `NothingTransparentSuite-v1.0.0.rmskin` from the Assets section below.
+2. Double-click the downloaded `.rmskin` file.
+3. In the Rainmeter Skin Installer dialog:
+   - Check **Apply included layout** (or **Load included skins**).
+   - Click **Install**.
+4. Rainmeter automatically extracts and places all files into the correct destination directory:
    ```text
-   C:\Users\<ВашеИмя>\Documents\Rainmeter\Skins\NothingTransparentSuite
+   %USERPROFILE%\Documents\Rainmeter\Skins\NothingTransparentSuite
    ```
-2. Откройте внутри папку `@Resources\Fonts` и установите 4 шрифта (`ndot_55.otf`, `ndot_57.otf`, `Inter-Regular.ttf`, `Inter-SemiBold.ttf`) в Windows (клик правой кнопкой мыши -> *Установить для всех пользователей*).
-3. Правый клик по значку Rainmeter в трее -> **Обновить всё** (Refresh All).
+
+### Method B: Manual Installation from Source
+
+If installing from the repository source archive:
+1. Extract the `NothingTransparentSuite` directory to:
+   ```text
+   C:\Users\<YourUsername>\Documents\Rainmeter\Skins\NothingTransparentSuite
+   ```
+2. Navigate to `@Resources\Fonts` and install all four font files in Windows:
+   - `ndot_55.otf`
+   - `ndot_57.otf`
+   - `Inter-Regular.ttf`
+   - `Inter-SemiBold.ttf`
+   *(Right-click each font file and select "Install for all users")*.
+3. Right-click the Rainmeter tray icon and select **Refresh All**.
 
 ---
 
-### Шаг 2. Настройка погоды (в 1 клик)
-1. Откройте приложение **NothingConfig** (кликните по **красной точке** в виджете часов или запустите `NothingConfig.exe`).
-2. Перейдите на вкладку **«МОДУЛИ»**.
-3. В блоке «ПОГОДА» нажмите кнопку **«📍 ОПРЕДЕЛИТЬ АВТОМАТИЧЕСКИ»** — программа сама найдет ваш город и точные координаты по IP.
-   *Либо введите название города по-русски (например, «Москва» или «Минск») и нажмите кнопку **«НАЙТИ»**.*
-4. Нажмите большую красную кнопку внизу: **«ПРИМЕНИТЬ И ПЕРЕЗАПУСТИТЬ»**.
+## Post-Installation Configuration
 
----
+### 1. Launching the Configurator
+Open the NothingConfig utility using any of the following methods:
+- Click the red accent dot in the top-right corner of the **Clock** widget.
+- Click the **SETTINGS** button in the **Quick Launch Dock** widget.
+- Run `NothingConfig.exe` from your desktop or the `@Resources\Config` directory.
 
-### Шаг 3. Настройка медиаплеера (YouTube, Яндекс.Музыка, Spotify, VK)
-Виджет плеера работает через плагин `WebNowPlaying` и считывает треки прямо из вашего браузера:
-1. Установите бесплатное расширение **WebNowPlaying Companion** для вашего браузера:
-   - **Chrome / Яндекс / Brave / Edge:** [Установить из Chrome Web Store](https://chromewebstore.google.com/detail/webnowplaying-companion/jfakgfcdgpghbbefmfljkbdlibifomfo)
-   - **Firefox:** [Установить из Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/webnowplaying-companion/)
-2. Включите любой трек в браузере — виджет отобразит название, автора, обложку и шкалу перемотки.
-3. *Если вы слушаете музыку через Win32-плеер (AIMP, foobar2000, WMP):*
-   В `NothingConfig` -> вкладка «МОДУЛИ» -> переключите плеер на **«Локальный плеер (NowPlaying)»**.
+### 2. Weather and Geolocation Setup
+1. In NothingConfig, select the **MODULES** tab.
+2. In the **WEATHER** card, click **AUTO-DETECT LOCATION**. The utility resolves your city name, latitude, and longitude via IP lookup.
+   - Alternatively, enter a city name into the **CITY** field and click **SEARCH**.
+3. Click the red **APPLY AND RELOAD** button at the bottom of the window to save settings and refresh Rainmeter.
 
----
+### 3. Media Player Setup
+The Media Player widget uses the WebNowPlaying plugin to read media directly from web browsers and local players:
+1. Ensure the **WebNowPlaying Companion** extension is enabled in your browser.
+2. Start playing media on YouTube, Spotify, Soundcloud, or supported web services. Track information, progress bar, and controls will populate automatically.
+3. For local media players (such as AIMP, foobar2000, or Winamp):
+   - In NothingConfig -> **MODULES** -> switch media mode to **Local Player (NowPlaying)**.
+   - Click **APPLY AND RELOAD**.
 
-### Шаг 4. Настройка размытия стекла (Frosted Glass)
-В разных версиях Windows 11 аппаратный эффект акрила DWM может вести себя по-разному:
-- **Если стекло отображается красиво:** оставьте включенным.
-- **Если вы видите прямоугольный ореол вокруг закругленных углов:**
-  Откройте `NothingConfig` -> вкладка **«ДИЗАЙН И СТЕКЛО»** -> выключите тумблер **«Эффект Windows Acrylic Blur»** и нажмите **«Применить»**. Сюита переключится на идеально чистый Direct2D матовый режим без артефактов.
+### 4. Background Glass and Blur Effects
+The suite supports both Windows DWM Acrylic blur and Direct2D clean glass rendering:
+- If Windows Acrylic renders cleanly on your hardware, keep **Windows Acrylic Blur** enabled.
+- If your system exhibits rectangular halo artifacts around rounded corners (common on specific Windows 11 builds), open NothingConfig -> **DESIGN & GLASS** -> toggle **Windows Acrylic Blur** to **OFF** (`EnableBlur=0`) and click **APPLY AND RELOAD**. This activates hardware-accelerated Direct2D alpha blending with zero boundary artifacts.
 
----
-
-### Шаг 5. Список задач (Todo)
-- **Левый клик по задаче:** вычеркнуть как выполненную.
-- **Правый клик по задаче:** удалить задачу.
-- **Кнопка `[+]`:** ввести новую задачу.
-- **Кнопка `CLEAR COMPLETED`:** удалить все завершенные задачи.
-
----
-
-## ✦ English Summary & Quick Start
-
-1. **Install Rainmeter 4.5+ or 5.0+ (64-bit)**.
-2. **Download & double-click `NothingTransparentSuite-v1.0.0.rmskin`** to auto-install all skins, fonts, plugins, and the configurator.
-3. **Launch `NothingConfig.exe`** (or click the red dot in the Clock widget) to configure:
-   - **Weather:** Click `📍 ОПРЕДЕЛИТЬ АВТОМАТИЧЕСКИ` to auto-detect coordinates by IP.
-   - **Media Player:** Install the **WebNowPlaying Companion** browser extension for YouTube/Spotify/Yandex Music tracking.
-   - **Design:** Toggle Windows Acrylic blur or adjust card corner radius and opacity.
+### 5. Task List (Todo Widget)
+- **Left-click on a task item:** Toggles completion status (strikethrough and dimmed text).
+- **Right-click on a task item:** Deletes the item from the list.
+- **Click [+] button:** Opens an input prompt to add a new task.
+- **Click CLEAR COMPLETED:** Removes all finished tasks.
