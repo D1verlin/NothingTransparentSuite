@@ -2,10 +2,9 @@ name: Build & Package Suite
 
 on:
   push:
-    branches: [ "main", "master" ]
-    tags: [ "v*", "1.0*" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
