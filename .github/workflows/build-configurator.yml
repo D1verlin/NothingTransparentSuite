@@ -78,19 +78,7 @@ jobs:
       with:
         tag_name: v1.0.0
         name: "Nothing Transparent Suite v1.0.0"
-        body: |
-          ### Nothing Transparent Suite v1.0.0
-          Official unified Rainmeter desktop suite crafted in the authentic Nothing OS aesthetic.
-
-          #### Downloads:
-          - **`NothingTransparentSuite-v1.0.0.rmskin`**: Full Rainmeter suite (all 8 widgets, plugins, fonts, and configurator in one 1-click installer).
-          - **`NothingConfig.exe`**: Standalone single-file configurator application.
-
-          #### Highlights:
-          - **8 Modular Direct2D Widgets**: Clock, System, Disks, Todo, Network, Player, Weather, Launcher.
-          - **NothingConfig**: Native .NET 9 WPF configurator with Bento Grid layout and 1-click smart geolocation.
-          - **Official Dot-Matrix Teardrop Icon**: Scalable vector aesthetic.
-          - **Frosted Glass**: Windows Acrylic blur support and clean glass mode.
+        body_path: docs/RELEASE_BODY.md
         files: |
           release/NothingTransparentSuite-v1.0.0.rmskin
           release/NothingConfig.exe
